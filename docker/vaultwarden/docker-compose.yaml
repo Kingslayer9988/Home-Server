@@ -1,0 +1,35 @@
+services:
+  vwdb:
+    image: "mariadb:latest"
+    container_name: "vwdb"
+    hostname: "vwdb"
+    restart: unless-stopped
+    env_file:
+        - ".env"
+    environment:
+      - "MYSQL_ROOT_PASSWORD="
+      - "MYSQL_PASSWORD="
+      - "MYSQL_DATABASE="
+      - "MYSQL_USER="
+    volumes:
+      - "/path:/path"
+      - "/path:/path"
+    labels:
+      - "org.hotio.pullio.update=true"
+  vaultwarden:
+    image: "vaultwarden/server:latest"
+    container_name: "vaultwarden"
+    hostname: "vaultwarden"
+    restart: unless-stopped
+    env_file:
+      - ".env"
+    environment:
+      DATABASE_URL: 
+      ADMIN_TOKEN: 
+      RUST_BACKTRACE: 1
+    volumes:
+      - "/path:/path"
+    ports:
+      - "8090:80"
+    labels:
+      - "org.hotio.pullio.update=true"

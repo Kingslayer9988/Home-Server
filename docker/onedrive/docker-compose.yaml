@@ -1,0 +1,16 @@
+services:
+  onedrive:
+    image: "driveone/onedrive:edge"
+    container_name: "onedrive"
+    hostname: "onedrive"
+    restart: unless-stopped
+    environment:
+        - ONEDRIVE_UID=${PUID}
+        - ONEDRIVE_GID=${PGID}
+    ports:
+      - "7498:7498"
+    volumes:
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"

@@ -1,0 +1,31 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    restart: unless-stopped
+    container_name: gluetun
+    # line above must be uncommented to allow external containers to connect.
+    # See https://github.com/qdm12/gluetun-wiki/blob/main/setup/connect-a-container-to-gluetun.md#external-container-to-gluetun
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    ports:
+      - 8888:8888/tcp # HTTP proxy
+      - 8388:8388/tcp # Shadowsocks
+      - 8388:8388/udp # Shadowsocks
+      - 9117:9117     # Jackett
+      - 6980:6980     # Namer PornDB
+      - 8080:8080     # QBT
+      - 6881:6881     # QBT
+      - 29878:29878   # QBT
+      - 6881:6881/udp # QBT
+    volumes:
+      - /docker/appdata/gluetun:/gluetun
+    environment:
+      # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
+      - VPN_SERVICE_PROVIDER=
+      - SERVER_COUNTRIES=
+      - FIREWALL_VPN_INPUT_PORTS=
+      - TZ= Europe/Vienna
+    labels:
+      - "org.hotio.pullio.update=true"

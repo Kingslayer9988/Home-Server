@@ -1,0 +1,16 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+    volumes:
+      - /path:/path
+    ports:
+      - 8008:80
+      - 4438:443
+    restart: unless-stopped
+    labels:
+      - "org.hotio.pullio.update=true"

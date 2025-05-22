@@ -1,0 +1,16 @@
+name: android
+services:
+    docker-android:
+        container_name: android-container
+        image: budtmo/docker-android:emulator_14.0
+        ports:
+            - 6080:6080
+            - 5554:5554
+            - 5555:5555
+        environment:
+            - EMULATOR_DEVICE=Samsung Galaxy S10
+            - WEB_VNC=true
+        #volumes:
+        #
+        devices:
+            - /dev/kvm

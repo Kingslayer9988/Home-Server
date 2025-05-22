@@ -1,0 +1,35 @@
+name: company_2
+services:
+    postgres:
+        container_name: my-postgres
+        environment:
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
+        image: postgres
+        labels:
+          - "org.hotio.pullio.update=true"
+    pgadmin4:
+        container_name: test-pgadmin
+        ports:
+            - 15432:80
+        environment:
+            - PGADMIN_DEFAULT_EMAIL=
+            - PGADMIN_DEFAULT_PASSWORD=
+        image: dpage/pgadmin4
+        labels:
+            - "org.hotio.pullio.update=true"
+        depends_on:
+            - postgres
+    querytree:
+        container_name: querytree
+        image: d4software/querytree:latest
+        ports:
+            - "5455:80"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=
+            - ConnectionStrings__QueryTree=Server=
+        labels:
+            - "org.hotio.pullio.update=true"
+        depends_on:
+            - postgres

@@ -1,0 +1,41 @@
+# Copyright (c) 2024 Oskar Manhart
+# Copyright (c) 2024 Rohan Barar
+# All rights reserved.
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# For documentation, FAQ, additional configuration options and technical help, visit: https://github.com/dockur/windows
+
+name: "winapps" # Docker Compose Project Name.
+volumes:
+  # Create Volume 'data'.
+  data:
+services:
+  windows:
+    image: dockurr/windows  # https://hub.docker.com/r/dockurr/windows
+    container_name: WinApps # Created Docker VM Name.
+    environment:
+      VERSION: "win11"
+      RAM_SIZE: "8G" # RAM allocated to the Windows VM.
+      CPU_CORES: "4" # CPU cores allocated to the Windows VM.
+      DISK_SIZE: "128G" # Size of the primary hard disk.
+      LANGUAGE: "German"
+      USERNAME: ""
+      PASSWORD: ""
+      GPU: "Y"
+      HOME: "/docker/appdata/windows/home" # Linux user home folder
+    privileged: true
+    ports:
+      # - 5900:5900 spice Port
+      - 8006:8006
+      - 5901:3389/tcp
+      - 5901:3389/udp
+    stop_grace_period: 120s
+    restart: always
+    volumes:
+      - data:/storage # Windows 'C:' drive
+      - /docker/appdata/windows/home:/shared # Linux user home directory
+    devices:
+      - /dev/kvm # Enable KVM
+      # - /dev/kvmfr0:/dev/kvmfr0 # Shared memory for Looking Glass
+      - /dev/dri

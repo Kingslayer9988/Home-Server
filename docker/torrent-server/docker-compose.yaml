@@ -1,0 +1,230 @@
+services:
+  radarr:
+    container_name: radarr
+    image: ghcr.io/hotio/radarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  sonarr:
+    container_name: sonarr
+    image: ghcr.io/hotio/sonarr:latest
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  lidarr:
+    container_name: lidarr
+    image: ghcr.io/hotio/lidarr:nightly
+    restart: unless-stopped
+    logging:
+      driver: json-file
+    ports:
+      - 8686:8686
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"  
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+      - JELLYFIN_PublishedServerUrl= #optional
+    volumes:
+      - /path:/path
+      - /path:/path
+      - /path:/path
+      - //path:/path
+      - /path:/path
+      - /path:/path
+      - /path:/path/entrypoint.sh # Add this line to mount the script
+    entrypoint: ["/entrypoint.sh"] # Add this line to use the script as entrypoint
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+    devices:
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    labels:
+      - "org.hotio.pullio.update=true"
+  jackett:
+    container_name: jackett
+    image: ghcr.io/hotio/jackett:latest
+    network_mode: "container:gluetun"
+    restart: unless-stopped
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - UMASK=002
+      - TZ=Europe/Vienna
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  qbittorrent:
+    container_name: qbittorrent
+    image: lscr.io/linuxserver/qbittorrent:latest
+    restart: unless-stopped
+    network_mode: "container:gluetun"
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+      - WEBUI_PORT_ENV=
+      - WEBUI_PORT=
+      - TORRENTING_PORT=
+    volumes:
+      - /path:/path
+      - /path:/path
+    labels:
+     - "org.hotio.pullio.update=true"
+  qbitmanage:
+    container_name: qbitmanage
+    image: ghcr.io/hotio/qbitmanage:latest
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - UMASK=002
+      - QBT_RUN=true
+      - TZ=Europe/Vienna
+    volumes:
+      - /path:/path
+      - /path:/path
+    labels:
+     - "org.hotio.pullio.update=true"
+  jellyseerr:
+    container_name: jellyseerr
+    image: ghcr.io/hotio/jellyseerr:latest
+    restart: unless-stopped
+    ports:
+      - "5055:5055"
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - UMASK=002
+      - TZ=Europe/Vienna
+    volumes:
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  whisparr:
+    container_name: whisparr
+    restart: unless-stopped
+    image: ghcr.io/hotio/whisparr:nightly
+    ports:
+      - "6969:6969"
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - UMASK=002
+      - TZ=Europe/Vienna
+    volumes:
+      - /path:/path
+      - /path:/patha
+    labels:
+      - "org.hotio.pullio.update=true"
+  namer:
+    container_name: namer
+    image: ghcr.io/theporndatabase/namer:latest
+    restart: unless-stopped
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - TZ=Europe/Vienna
+      - NAMER_CONFIG=/path:/path
+    devices:
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    volumes:
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  stash:
+    container_name: stash
+    image: ghcr.io/hotio/stash:nightly
+    restart: unless-stopped
+    privileged: true
+    group_add:
+      - "104" # Change this to match your "render" host group id and remove this comment
+    ports:
+      - "9999:9999"
+    environment:
+      - PUID=1003
+      - PGID=1003
+      - UMASK=002
+      - TZ=Europe/Vienna
+    devices:
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    volumes:
+      - /path:/path
+      - /path:/path
+    labels:
+      - "org.hotio.pullio.update=true"
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+    environment:
+      - TZ=Europe/Vienna
+      - PUID=1003
+      - PGID=1003
+      - UMASK_SET=002
+      - serverIP=
+      - serverPort=
+      - webUIPort=
+      - internalNode=true
+      - inContainer=true
+      - ffmpegVersion=7
+      - nodeName=tdarr
+    volumes:
+      - /path:/path
+      - /path:/path
+      - /path:/path
+      - /path:/path
+      - /path:/path
+    devices:
+      - /dev/dri/card0:/dev/dri/card0
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    labels:
+      - "org.hotio.pullio.update=true"

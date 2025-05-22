@@ -1,0 +1,63 @@
+version: '3'
+
+# This file is an index of all available container services
+# Each service points to its respective folder with its own docker-compose.yaml file
+
+services:
+  # Just placeholders that show which services are available
+  # To use any of these services, go to their respective directories
+  
+  android:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./android/docker-compose.yaml
+    
+  company:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./company/docker-compose.yaml
+    
+  gluetun:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./gluetun/docker-compose.yaml
+    
+  heimdall:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./heimdall/docker-compose.yaml
+    
+  omada-controller:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./omada-controller/docker-compose.yaml
+    
+  onedrive:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./onedrive/docker-compose.yaml
+    
+  photoprism:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./photoprism/docker-compose.yaml
+    
+  torrent-server:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./torrent-server/docker-compose.yaml
+    
+  vaultwarden:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./vaultwarden/docker-compose.yaml
+    
+  webserver:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./webserver/docker-compose.yaml
+    
+  windows:
+    image: placeholder
+    profiles: ['do-not-start']
+    # See ./windows/docker-compose.yaml
